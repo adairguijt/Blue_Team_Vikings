@@ -1,7 +1,7 @@
 # With a correction already implemented: dont forget to initialize an instance of Class "War"
 
 
-from .vikingsClasses import Soldier, Viking, Saxon, War
+from vikingsClasses import Soldier, Viking, Saxon, War
 import random
 
 
@@ -25,3 +25,12 @@ while great_war.showStatus() == "Vikings and Saxons are still in the thick of ba
     print(f"round: {round} // Viking army: {len(great_war.vikingArmy)} warriors",f"and Saxon army: {len(great_war.saxonArmy)} warriors")
     print(great_war.showStatus())
     round += 1
+    
+    # Quick test to see if weather works
+Soldier.WEATHER = "Foggy"
+viking_test = Viking("Ragnar", 100, 50)
+saxon_test = Saxon(100, 20)
+
+print(f"Current Weather: {Soldier.WEATHER}")
+# This might return 0 strength if the 20% fog miss triggers
+print(f"Attack power in fog: {viking_test.attack()}")
