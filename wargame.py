@@ -1,36 +1,52 @@
-# With a correction already implemented: dont forget to initialize an instance of Class "War"
-
-
 from vikingsClasses import Soldier, Viking, Saxon, War
 import random
 
+War.GAME_SPEED = 1.0
+Soldier.WEATHER = "Muddy"
 
-soldier_names = ["albert","andres","archie","dani", "david","gerard","german","graham","imanol","laura"]
+soldier_names = ["Ricki", "Adair", "Roy", "Swapnali", "Eric-with-a-C", "Erik-with-a-K", "Kate", "Javier", "Raya", "Assya"]
 great_war = War()
 
-#Create 5 Vikings
-for i in range(0,5):
-    if i:
-        great_war.addViking(Viking(soldier_names[random.randint(0,9)],100,random.randint(0,100)))
+for i in range(5):
+    name = random.choice(soldier_names)
+    health = 100
+    strength = random.randint(50, 80)
+    great_war.addViking(Viking(name, health, strength))
 
-#Create 5 Saxons
-for i in range(0,5):
-    if i:
-        great_war.addSaxon(Saxon(100,random.randint(0,100)))
-    
-round = 0
+for i in range(5):
+    health = 100
+    strength = random.randint(30, 60)
+    great_war.addSaxon(Saxon(health, strength))
+
+print("\n" + "="*50)
+print(f"THE GREAT WAR BEGINS (Weather: {Soldier.WEATHER})")
+print("="*50)
+
+input("\n   (The armies are ready. Press Enter to charge!)")
+
+round_count = 0
+
 while great_war.showStatus() == "Vikings and Saxons are still in the thick of battle.":
-    great_war.vikingAttack()
-    great_war.saxonAttack()
-    print(f"round: {round} // Viking army: {len(great_war.vikingArmy)} warriors",f"and Saxon army: {len(great_war.saxonArmy)} warriors")
-    print(great_war.showStatus())
-    round += 1
+    round_count += 1
+    print(f"\n--- ROUND {round_count} ---")
+    print(f"Vikings: {len(great_war.vikingArmy)} | Saxons: {len(great_war.saxonArmy)}")
     
-    # Quick test to see if weather works
-Soldier.WEATHER = "Foggy"
-viking_test = Viking("Ragnar", 100, 50)
-saxon_test = Saxon(100, 20)
+    great_war.vikingAttack()
+    
+    if great_war.showStatus() != "Vikings and Saxons are still in the thick of battle.":
+        break
+        
+    input("   (Press Enter to continue...)")
 
-print(f"Current Weather: {Soldier.WEATHER}")
-# This might return 0 strength if the 20% fog miss triggers
-print(f"Attack power in fog: {viking_test.attack()}")
+    great_war.saxonAttack()
+    
+    if great_war.showStatus() != "Vikings and Saxons are still in the thick of battle.":
+        break
+
+    input("   (Press Enter to continue...)")
+
+print("\n" + "="*50)
+print(great_war.showStatus())
+print("="*50 + "\n")
+
+input("   (Press Enter to close the battlefield...)")
